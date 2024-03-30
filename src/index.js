@@ -1,17 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import './style/index.css';
+import logo  from "./images/logo.svg";
+import Navigation from './Components/navigation.js';
+import MainContent from './Components/main-content';
+import NavigationWindow from './Components/navigation-window.js';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
+export default function App() {
+  const [showNavWindow, setShowNavWindow] = useState(false);
+  return (
+    <>
+      <section className='top-bar'>
+        <div className='logo'>
+            <img src={logo}/>
+        </div>
+        <div className='nav-bar'>
+          <Navigation />
+        </div>
+        <div className='nav-window'>
+          <i onClick = {() => setShowNavWindow(true)} className="fa-solid fa-bars"></i>
+        </div>
+      </section>
+      {showNavWindow && <NavigationWindow setShowNavWindow = {setShowNavWindow}/>}
+      <MainContent />
+    </>
+  )
+}
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+const root = ReactDOM.createRoot(document.getElementById('container'));
+root.render(<App />);
